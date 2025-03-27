@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
+import { articleService } from '~/api/articlesService';
 import type { ArticleCard } from '~/types/article';
 
 definePageMeta({ layout: 'default', name: 'article' });
 const route = useRoute();
-const articleId = computed(() => route.params.id);
+const articleId = computed(() =>
+  Array.isArray(route.params.id) ? route.params.id[0] : route.params.id
+);
 const {
   data: article,
   isFetching,
   isSuccess,
 } = useQuery({
   queryKey: ['article', articleId.value],
-  queryFn: () =>
-    $fetch<ArticleCard>(
-      `https://6082e3545dbd2c001757abf5.mockapi.io/qtim-test-work/posts/${articleId.value}`
-    ),
+  queryFn: () => articleService.getArticlesById(articleId),
   enabled: () => !!articleId,
 });
 </script>

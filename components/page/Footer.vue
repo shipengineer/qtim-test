@@ -4,7 +4,7 @@
     <section class="w-full max-w-6xl flex justify-between mx-auto pt-36 mb-36">
       <div>
         <p class="mb-14">Is there a project?</p>
-        <NuxtLink class="underline underline-offset-auto text-9xl"
+        <NuxtLink class="underline underline-offset-auto text-7xl"
           >Let's work <br />
           together</NuxtLink
         >

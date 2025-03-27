@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
+import { articleService } from '~/api/articlesService';
 import type { ArticleCard } from '~/types/article';
 const { data: currentPageArticles, isSuccess } = useQuery({
   queryKey: ['articles'],
-  queryFn: () => {
-    return $fetch<ArticleCard[]>(
-      'https://6082e3545dbd2c001757abf5.mockapi.io/qtim-test-work/posts/'
-    );
-  },
+  queryFn: () => articleService.getAllArticles(),
 });
 const router = useRouter();
 
-const page = router.currentRoute.value.query.page || 1;
-const currentPage = ref(1);
+const currentPage = computed(() => {
+  const routerPage = router.currentRoute.value.query.page;
+  const page = Array.isArray(routerPage) ? routerPage[0] : routerPage;
+  return Number(page) || 1;
+});
+
 const totalPages = computed(() => {
   if (!currentPageArticles.value) {
     return 1;
@@ -48,7 +49,7 @@ const updateRouteHandler = (value: number) =>
     </div>
     <UiPagination
       :totalPages="totalPages"
-      v-model="currentPage"
+      :model-value="currentPage"
       @update:model-value="updateRouteHandler" />
   </section>
 </template>
