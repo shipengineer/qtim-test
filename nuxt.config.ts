@@ -30,11 +30,5 @@ export default defineNuxtConfig({
     size: '1em',
   },
 
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/icon',
-    '@nuxt/image',
-    '@nuxt/fonts',
-    '@nuxtjs/tailwindcss',
-  ],
+  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxtjs/tailwindcss'],
 });
